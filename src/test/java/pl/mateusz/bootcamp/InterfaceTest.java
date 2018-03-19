@@ -63,5 +63,9 @@ public class InterfaceTest {
         BiComparator<Integer, String, Integer> biComparator = (in, st) -> in > Integer.valueOf(st) ? 1 : (in < Integer.valueOf(st) ? -1 : 0);
 
         System.out.println(biComparator.comper(integer,string));
+
+        BiComparator biComparator1 = new BiComparatorImpl();
+
+        System.out.println(biComparator1.comper(integer,string));
     }
 }
