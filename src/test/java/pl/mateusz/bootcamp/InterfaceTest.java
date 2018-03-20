@@ -2,10 +2,7 @@ package pl.mateusz.bootcamp;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class InterfaceTest {
 
@@ -57,15 +54,44 @@ public class InterfaceTest {
 
     @Test
     public void compareDiferentType(){
-        Integer integer = 10;
+        Integer integer = 30;
         String string = "20";
 
-        BiComparator<Integer, String, Integer> biComparator = (in, st) -> in > Integer.valueOf(st) ? 1 : (in < Integer.valueOf(st) ? -1 : 0);
-
+        BiComparator<Integer, String, Integer> biComparator = (in, st) -> in > Integer.valueOf(st) ? -1 : (in < Integer.valueOf(st) ? 1 : 0);
         System.out.println(biComparator.comper(integer,string));
 
         BiComparator biComparator1 = new BiComparatorImpl();
-
         System.out.println(biComparator1.comper(integer,string));
+
+        BiComparator<Integer, String, Integer> biComparator2 = (in, st) -> in - Integer.valueOf(st);
+        System.out.println(biComparator2.comper(integer,string));
+    }
+
+    @Test
+    public void convert(){
+        String stringIn = "123";
+        Converter<String, Integer> converter = s -> Integer.valueOf(s);
+        System.out.println(converter.conver(stringIn));
+
+        Converter<String, Integer> converter1 = Integer::valueOf;
+    }
+
+    @Test
+    public void objectMethodReference(){
+        String word = "słowo";
+
+        StringUtils stringUtils = new StringUtils();
+
+        Optional<String> str = stringUtils.getFirstLetterUppercase(word);
+        if(str.isPresent()){
+            str.get().length();
+            System.out.println(str.get().length());
+        }
+
+        Converter<String, String> converter =  stringUtils::getFirestLatterUppercaseNotOptional;
+        System.out.println(converter.conver(word));
+
+        Converter<String, Optional<String>> converter1 = s -> stringUtils.getFirstLetterUppercase(s);
+        System.out.println(converter1.conver(word).orElse(null+"Pusty string"));
     }
 }
