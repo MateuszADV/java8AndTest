@@ -87,11 +87,26 @@ public class InterfaceTest {
             str.get().length();
             System.out.println(str.get().length());
         }
-
+                                                //Referencja do metody w obiekcie
         Converter<String, String> converter =  stringUtils::getFirestLatterUppercaseNotOptional;
         System.out.println(converter.conver(word));
 
         Converter<String, Optional<String>> converter1 = s -> stringUtils.getFirstLetterUppercase(s);
         System.out.println(converter1.conver(word).orElse(null+"Pusty string"));
+    }
+
+    @Test
+    public void constuctorReference(){
+        //Person p = new Person("a","b");
+
+        PersonFactory<Person> personFactory = (fn, ln) -> new Person(fn, ln);
+        Person p1 = personFactory.create("Jan", "Kowalski");
+        System.out.println(p1);
+
+        PersonFactory<Person> personFactory2 = Person::new;
+        Person p2 = personFactory2.create("Mateusz", "Ruchała");
+
+        System.out.println(p2);
+
     }
 }
